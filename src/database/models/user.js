@@ -1,10 +1,10 @@
-'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from "sequelize";
+
+export default (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.UserTimesheet, {
-        foreignKey: 'userId',
+        foreignKey: "userId",
       });
     }
   }
@@ -18,16 +18,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: {
           args: false,
-          msg: 'Please enter email address.',
+          msg: "Please enter email address.",
         },
         unique: {
           args: false,
-          msg: 'Email address already exist.',
+          msg: "Email address already exist.",
         },
         validate: {
           isEmail: {
             args: true,
-            msg: 'Please enter valid email address.',
+            msg: "Please enter valid email address.",
           },
         },
       },
@@ -55,8 +55,8 @@ module.exports = (sequelize, DataTypes) => {
       companyId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'company',
-          key: 'id',
+          model: "Company",
+          key: "id",
         },
       },
       createdAt: {
@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: "User",
     }
   );
   return User;

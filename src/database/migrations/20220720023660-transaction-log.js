@@ -1,6 +1,6 @@
 export default {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('transactionLog', {
+    await queryInterface.createTable("TransactionLogs", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,8 +10,8 @@ export default {
       userTimesheet: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'userTimesheet',
-          key: 'id',
+          model: "UserTimesheets",
+          key: "id",
         },
       },
       paidDate: {
@@ -31,6 +31,6 @@ export default {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('transactionLog');
+    await queryInterface.dropTable("TransactionLogs");
   },
 };

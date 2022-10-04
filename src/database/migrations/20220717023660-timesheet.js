@@ -1,27 +1,17 @@
 export default {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('userTimesheet', {
+    await queryInterface.createTable("Timesheets", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      timeSheetId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'timesheet',
-          key: 'id',
-        },
-      },
-      workingHours: {
+      monthYear: {
         type: Sequelize.INTEGER,
       },
-      totalPay: {
-        type: Sequelize.INTEGER,
-      },
-      tokensPaid: {
-        type: Sequelize.INTEGER,
+      isClosed: {
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +24,6 @@ export default {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('userTimesheet');
+    await queryInterface.dropTable("Timesheets");
   },
 };

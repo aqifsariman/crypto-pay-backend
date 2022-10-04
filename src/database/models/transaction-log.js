@@ -1,10 +1,10 @@
-'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from "sequelize";
+
+export default (sequelize, DataTypes) => {
   class TransactionLog extends Model {
     static associate(models) {
       TransactionLog.belongsTo(models.User, {
-        foreignKey: 'userId',
+        foreignKey: "userId",
       });
     }
   }
@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       userTimesheet: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'UserTimesheet',
-          key: 'id',
+          model: "UserTimesheet",
+          key: "id",
         },
       },
       paidDate: {
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'TransactionLog',
+      modelName: "TransactionLog",
     }
   );
   return TransactionLog;

@@ -1,17 +1,14 @@
 export default {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('timesheet', {
+    await queryInterface.createTable("Companies", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      monthYear: {
-        type: Sequelize.INTEGER,
-      },
-      isClosed: {
-        type: Sequelize.BOOLEAN,
+      name: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -24,6 +21,6 @@ export default {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('timesheet');
+    await queryInterface.dropTable("Companies");
   },
 };

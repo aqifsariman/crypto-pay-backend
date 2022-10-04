@@ -1,10 +1,10 @@
-'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from "sequelize";
+
+export default (sequelize, DataTypes) => {
   class Timesheet extends Model {
     static associate(models) {
       Timesheet.belongsTo(models.User, {
-        foreignKey: 'userId',
+        foreignKey: "userId",
       });
     }
   }
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Timesheet',
+      modelName: "Timesheet",
     }
   );
   return Timesheet;
