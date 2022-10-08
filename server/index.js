@@ -36,6 +36,7 @@ app.get("/timesheet", TimesheetController.getTimesheet);
 app.post("/update-timesheet", TimesheetController.updateTimesheet);
 
 app.get("/payroll", PayrollController.getOutstandingPayment);
+app.post("/update-payroll", PayrollController.payOutstanding);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on ${PORT}. Here we go! 🚀`);
