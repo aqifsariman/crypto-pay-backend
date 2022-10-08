@@ -103,8 +103,32 @@ export default function initTimesheetController(db) {
     }
   };
 
+  const lockTimesheet = async (req, res) => {
+    try {
+      let { dateRange } = req.query;
+
+      const { month, year } = await dateRangeConverter(dateRange);
+
+      const lockedTimesheet = await db.Timesheet.findOne({
+        where: { month: month, year: year },
+      });
+
+      await lockedTimesheet.update({ isClosed: true });
+      await lockedTimesheet.save();
+
+      res.status(200).json({ message: "Success!", lockedTimesheet });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({
+        message:
+          "Could not perform operation at this time, kindly try again later.",
+      });
+    }
+  };
+
   return {
     getTimesheet,
     updateTimesheet,
+    lockTimesheet,
   };
 }

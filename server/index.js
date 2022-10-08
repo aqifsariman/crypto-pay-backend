@@ -34,6 +34,7 @@ app.get("/delete-employee/:userId", EmployeeController.deleteEmployee);
 
 app.get("/timesheet", TimesheetController.getTimesheet);
 app.post("/update-timesheet", TimesheetController.updateTimesheet);
+app.post("/lock-timesheet", TimesheetController.lockTimesheet);
 
 app.get("/payroll", PayrollController.getOutstandingPayment);
 app.post("/update-payroll", PayrollController.payOutstanding);
