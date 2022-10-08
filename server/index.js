@@ -32,6 +32,8 @@ app.get("/delete-employee/:userId", EmployeeController.deleteEmployee);
 
 app.get("/timesheet", TimesheetController.getTimesheet);
 
+app.post("/update-timesheet", TimesheetController.updateTimesheet);
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on ${PORT}. Here we go! 🚀`);
 });
