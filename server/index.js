@@ -4,8 +4,10 @@ import bodyParser from "body-parser";
 import "dotenv/config";
 import db from "../src/database/models";
 import initEmployeeController from "../src/controllers/EmployeeController";
+import initTimesheetController from "../src/controllers/TimesheetController";
 
 const EmployeeController = initEmployeeController(db);
+const TimesheetController = initTimesheetController(db);
 
 const PORT = process.env.PORT || 3004;
 const app = express();
@@ -27,6 +29,8 @@ app.get("/user/:userId", EmployeeController.getEmployee);
 app.post("/add-employee", EmployeeController.addEmployee);
 app.post("/update-employee/:userId", EmployeeController.postEmployee);
 app.get("/delete-employee/:userId", EmployeeController.deleteEmployee);
+
+app.get("/timesheet", TimesheetController.getTimesheet);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on ${PORT}. Here we go! 🚀`);

@@ -7,7 +7,10 @@ export default {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      monthYear: {
+      month: {
+        type: Sequelize.INTEGER,
+      },
+      year: {
         type: Sequelize.INTEGER,
       },
       isClosed: {

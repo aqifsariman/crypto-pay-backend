@@ -6,6 +6,9 @@ export default (sequelize, DataTypes) => {
       UserTimesheet.belongsTo(models.User, {
         foreignKey: "userId",
       });
+      UserTimesheet.belongsTo(models.Timesheet, {
+        foreignKey: "timeSheetId",
+      });
     }
   }
   UserTimesheet.init(
@@ -13,7 +16,14 @@ export default (sequelize, DataTypes) => {
       timeSheetId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Timesheet",
+          model: "Timesheets",
+          key: "id",
+        },
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Users",
           key: "id",
         },
       },

@@ -3,17 +3,17 @@ import { Model } from "sequelize";
 export default (sequelize, DataTypes) => {
   class Timesheet extends Model {
     static associate(models) {
-      Timesheet.belongsTo(models.User, {
-        foreignKey: "userId",
+      Timesheet.hasMany(models.UserTimesheet, {
+        foreignKey: "timeSheetId",
       });
     }
   }
   Timesheet.init(
     {
-      name: {
-        type: DataTypes.STRING,
+      month: {
+        type: DataTypes.INTEGER,
       },
-      monthYear: {
+      year: {
         type: DataTypes.INTEGER,
       },
       isClosed: {

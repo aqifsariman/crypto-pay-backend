@@ -14,6 +14,13 @@ export default {
           key: "id",
         },
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      },
       workingHours: {
         type: Sequelize.INTEGER,
       },
