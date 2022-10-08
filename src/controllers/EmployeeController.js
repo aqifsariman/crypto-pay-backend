@@ -33,7 +33,6 @@ export default function initEmployeeController(db) {
   const getEmployee = async (req, res) => {
     try {
       let { userId } = req.params;
-      console.log(userId);
       const user = await db.User.findByPk(userId);
 
       if (user) {
@@ -83,9 +82,31 @@ export default function initEmployeeController(db) {
     }
   };
 
+  const deleteEmployee = async (req, res) => {
+    try {
+      let { userId } = req.params;
+
+      const deleted = await db.User.destroy({
+        where: { id: userId },
+      });
+
+      if (!deleted) {
+        res.status(204).json({ message: "Collection not found" });
+      }
+      res.status(202).json({ message: "Deleted!" });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({
+        message:
+          "Could not perform operation at this time, kindly try again later.",
+      });
+    }
+  };
+
   return {
     addEmployee,
     getEmployee,
     postEmployee,
+    deleteEmployee,
   };
 }

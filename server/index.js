@@ -26,6 +26,7 @@ app.get("/api", (req, res) => {
 app.get("/user/:userId", EmployeeController.getEmployee);
 app.post("/add-employee", EmployeeController.addEmployee);
 app.post("/update-employee/:userId", EmployeeController.postEmployee);
+app.get("/delete-employee/:userId", EmployeeController.deleteEmployee);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on ${PORT}. Here we go! 🚀`);
