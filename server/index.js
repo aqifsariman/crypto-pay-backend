@@ -23,7 +23,9 @@ app.get("/api", (req, res) => {
   res.json({ message: "Hello there! Welcome to the server!" });
 });
 
+app.get("/user/:userId", EmployeeController.getEmployee);
 app.post("/add-employee", EmployeeController.addEmployee);
+app.post("/update-employee/:userId", EmployeeController.postEmployee);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on ${PORT}. Here we go! 🚀`);
