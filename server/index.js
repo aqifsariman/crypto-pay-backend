@@ -5,9 +5,11 @@ import "dotenv/config";
 import db from "../src/database/models";
 import initEmployeeController from "../src/controllers/EmployeeController";
 import initTimesheetController from "../src/controllers/TimesheetController";
+import initPayrollController from "../src/controllers/PayrollController";
 
 const EmployeeController = initEmployeeController(db);
 const TimesheetController = initTimesheetController(db);
+const PayrollController = initPayrollController(db);
 
 const PORT = process.env.PORT || 3004;
 const app = express();
@@ -31,8 +33,9 @@ app.post("/update-employee/:userId", EmployeeController.postEmployee);
 app.get("/delete-employee/:userId", EmployeeController.deleteEmployee);
 
 app.get("/timesheet", TimesheetController.getTimesheet);
-
 app.post("/update-timesheet", TimesheetController.updateTimesheet);
+
+app.get("/payroll", PayrollController.getOutstandingPayment);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on ${PORT}. Here we go! 🚀`);
