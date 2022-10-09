@@ -9,6 +9,9 @@ export default (sequelize, DataTypes) => {
       UserTimesheet.belongsTo(models.Timesheet, {
         foreignKey: "timeSheetId",
       });
+      UserTimesheet.hasMany(models.TransactionLog, {
+        foreignKey: "userTimesheet",
+      });
     }
   }
   UserTimesheet.init(

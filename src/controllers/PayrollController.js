@@ -33,12 +33,20 @@ export default function initPayrollController(db) {
   const payOutstanding = async (req, res) => {
     let { timesheet_items } = req.body;
     timesheet_items = JSON.parse(timesheet_items);
-
+    let transaction_logs = [];
     try {
       const replaceTokensPaid = async () => {
         await Promise.all(
           timesheet_items.map(async (obj, index) => {
+            transaction_logs[index] = {};
+            transaction_logs[index].userTimesheet = timesheet_items[index].id;
+
+            transaction_logs[index].totalPayment =
+              timesheet_items[index].totalPay -
+              timesheet_items[index].tokensPaid;
+
             timesheet_items[index].tokensPaid = timesheet_items[index].totalPay;
+
             timesheet_items[index].updatedAt = new Date();
           })
         ).then((_response) => {
@@ -53,7 +61,14 @@ export default function initPayrollController(db) {
           updateOnDuplicate: ["tokensPaid", "updatedAt"],
         }
       );
-      res.status(200).json({ message: "Success!", updatedTimesheets });
+
+      const transactionLog = await db.TransactionLog.bulkCreate(
+        transaction_logs
+      );
+
+      res
+        .status(200)
+        .json({ message: "Success!", updatedTimesheets, transactionLog });
     } catch (e) {
       console.log(e);
       return res.status(500).send({

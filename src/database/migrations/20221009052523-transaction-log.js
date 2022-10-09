@@ -15,7 +15,7 @@ export default {
         },
       },
       paidDate: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DATE,
       },
       totalPayment: {
         type: Sequelize.INTEGER,

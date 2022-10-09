@@ -3,8 +3,8 @@ import { Model } from "sequelize";
 export default (sequelize, DataTypes) => {
   class TransactionLog extends Model {
     static associate(models) {
-      TransactionLog.belongsTo(models.User, {
-        foreignKey: "userId",
+      TransactionLog.belongsTo(models.UserTimesheet, {
+        foreignKey: "id",
       });
     }
   }
@@ -18,7 +18,8 @@ export default (sequelize, DataTypes) => {
         },
       },
       paidDate: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATE,
+        defaultValue: new Date(),
       },
       totalPayment: {
         type: DataTypes.INTEGER,
