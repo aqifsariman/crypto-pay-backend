@@ -1,9 +1,12 @@
 import bcrypt from "bcryptjs";
+import SparkMD5 from "spark-md5";
 
 export default function initEmployeeController(db) {
   const addEmployee = async (req, res) => {
     try {
       let { name, email, designation, salary, walletAddress, isHR } = req.body;
+      let avatarHASH = SparkMD5.hash(email);
+      let avatar = `https://www.gravatar.com/avatar/${avatarHASH}?s=96&d=identicon&r=PG`;
 
       const duplicateEmail = await db.User.findOne({
         where: {
@@ -19,6 +22,7 @@ export default function initEmployeeController(db) {
       const user = await db.User.create({
         name,
         email,
+        avatar,
         password: bcrypt.hashSync("password", 8),
         designation,
         salary: Number(salary),
