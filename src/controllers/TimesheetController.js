@@ -25,10 +25,22 @@ export default function initTimesheetController(db) {
         },
       });
 
-      if (timesheet) {
-        return res
-          .status(200)
-          .send({ users, timesheet: timesheet[0], message: "ok" });
+      if (timesheet && users) {
+        const timesheetData = users
+          .map((Item) => ({
+            ...Item.dataValues,
+            ...Item.dataValues.UserTimesheets[0].dataValues,
+            ...Item.dataValues.UserTimesheets[0].dataValues.Timesheet
+              .dataValues,
+          }))
+          .map((Item) => {
+            Item.id = Item.UserTimesheets[0].dataValues.id;
+            delete Item.UserTimesheets;
+            delete Item.Timesheet;
+            return Item;
+          });
+
+        return res.status(200).send({ timesheetData, message: "ok" });
       }
     } catch (e) {
       console.log(e);
