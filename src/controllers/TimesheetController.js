@@ -15,6 +15,7 @@ export default function initTimesheetController(db) {
       });
 
       const users = await db.User.findAll({
+        attributes: { exclude: ["password"] },
         include: {
           model: db.UserTimesheet,
           include: {

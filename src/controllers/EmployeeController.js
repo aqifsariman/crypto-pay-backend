@@ -4,6 +4,18 @@ export default function initEmployeeController(db) {
   const addEmployee = async (req, res) => {
     try {
       let { name, email, designation, salary, walletAddress, isHR } = req.body;
+
+      const duplicateEmail = await db.User.findOne({
+        where: {
+          email: email,
+        },
+      });
+
+      if (duplicateEmail) {
+        console.log("duplicate found");
+        return res.status(409).send({ message: "Duplicate email found" });
+      }
+
       const user = await db.User.create({
         name,
         email,
@@ -17,6 +29,7 @@ export default function initEmployeeController(db) {
       });
 
       if (user) {
+        user.password = null;
         return res
           .status(200)
           .send({ user, message: "User was added successfully!" });
@@ -36,6 +49,7 @@ export default function initEmployeeController(db) {
       const user = await db.User.findByPk(userId);
 
       if (user) {
+        user.password = null;
         return res.status(200).send({ user, message: "User is found!" });
       } else {
         return res
@@ -69,6 +83,7 @@ export default function initEmployeeController(db) {
       );
 
       if (user) {
+        user.password = null;
         return res
           .status(200)
           .send({ user, message: "User was updated successfully!" });

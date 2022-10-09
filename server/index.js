@@ -3,10 +3,12 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import "dotenv/config";
 import db from "../src/database/models";
+import initAuthController from "../src/controllers/AuthController";
 import initEmployeeController from "../src/controllers/EmployeeController";
 import initTimesheetController from "../src/controllers/TimesheetController";
 import initPayrollController from "../src/controllers/PayrollController";
 
+const AuthController = initAuthController(db);
 const EmployeeController = initEmployeeController(db);
 const TimesheetController = initTimesheetController(db);
 const PayrollController = initPayrollController(db);
@@ -26,6 +28,9 @@ app.use(cors());
 app.get("/api", (req, res) => {
   res.json({ message: "Hello there! Welcome to the server!" });
 });
+
+app.post("/auth/login", AuthController.login);
+app.get("/auth/logout", AuthController.logout);
 
 app.get("/user/:userId", EmployeeController.getEmployee);
 app.post("/add-employee", EmployeeController.addEmployee);
