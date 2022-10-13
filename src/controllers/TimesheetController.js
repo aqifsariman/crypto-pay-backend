@@ -25,8 +25,8 @@ export default function initTimesheetController(db) {
         },
       });
 
-      if (timesheet && users) {
-        const timesheetData = users
+      /*
+      const timesheetData = users
           .map((Item) => ({
             ...Item.dataValues,
             ...Item.dataValues.UserTimesheets[0].dataValues,
@@ -38,9 +38,11 @@ export default function initTimesheetController(db) {
             delete Item.UserTimesheets;
             delete Item.Timesheet;
             return Item;
-          });
+            })
+            */
 
-        return res.status(200).send({ timesheetData, message: "ok" });
+      if (timesheet && users) {
+        return res.status(200).send({ users, timesheet, message: "ok" });
       }
     } catch (e) {
       console.log(e);
