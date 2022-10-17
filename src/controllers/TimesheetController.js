@@ -14,7 +14,7 @@ export default function initTimesheetController(db) {
         },
       });
 
-      const users = await db.User.findAll({
+      const listUsers = await db.User.findAll({
         attributes: { exclude: ["password"] },
         include: {
           model: db.UserTimesheet,
@@ -41,7 +41,31 @@ export default function initTimesheetController(db) {
             })
             */
 
-      if (timesheet && users) {
+      if (timesheet && listUsers) {
+        //to create blank userTimesheets here
+        for (let i = 0; i < listUsers.length; i++) {
+          if (listUsers[i].dataValues.UserTimesheets.length === 0) {
+            await db.UserTimesheet.create({
+              timeSheetId: timesheet[0].dataValues.id,
+              userId: listUsers[i].dataValues.id,
+              workingHours: 0,
+              totalPay: 0,
+              tokensPaid: 0,
+            });
+          }
+        }
+
+        const users = await db.User.findAll({
+          attributes: { exclude: ["password"] },
+          include: {
+            model: db.UserTimesheet,
+            include: {
+              model: db.Timesheet,
+              where: { month: month, year: year },
+            },
+          },
+        });
+
         return res.status(200).send({ users, timesheet, message: "ok" });
       }
     } catch (e) {
@@ -61,7 +85,7 @@ export default function initTimesheetController(db) {
     /*let timesheet_items = [
       {
         id: 1,
-        timeSheetId: 1,
+        timeSheetId: undefined,
         userId: 1,
         workingHours: 4,
         totalPay: 0,
