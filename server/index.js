@@ -1,5 +1,5 @@
 import express from "express";
-import cors from "cors";
+//import cors from "cors";
 import bodyParser from "body-parser";
 import "dotenv/config";
 import db from "../src/database/models";
@@ -24,7 +24,7 @@ app.use(
   })
 );
 
-app.use(cors());
+//app.use(cors());
 
 /*
 const corsOptions = {
