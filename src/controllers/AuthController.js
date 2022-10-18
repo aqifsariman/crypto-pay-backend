@@ -50,6 +50,22 @@ export default function initAuthController(db) {
   const reAuth = async (req, res) => {
     try {
       let token = req.cookies["x-access-token"];
+      let userId = req.cookies["userId"];
+
+      const user = await db.User.findOne({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (user) {
+        user.password = null;
+      }
+
+      if (!user) {
+        return res.status(404).send({ message: "User Not found." });
+      }
+
       if (!token) {
         return res.status(403).send({
           message: "No token provided!",
@@ -62,7 +78,9 @@ export default function initAuthController(db) {
           });
         }
         req.userId = decoded.id;
+
         return res.status(200).send({
+          user,
           message: "Authorized!",
         });
       });
