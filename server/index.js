@@ -23,23 +23,14 @@ app.use(
     extended: true,
   })
 );
-const whitelist = ["http://localhost:3000", "https://project.ameliawibi.com"];
-let corsOptionsDelegate = function (req, callback) {
-  let corsOptions;
-  if (whitelist.indexOf(req.header("Origin")) !== -1) {
-    corsOptions = {
-      origin: true,
-      credentials: true,
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      optionSuccessStatus: 200,
-    }; // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false }; // disable CORS for this request
-  }
-  callback(null, corsOptions); // callback expects two parameters: error and options
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptionsDelegate));
+app.use(cors(corsOptions));
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello there! Welcome to the server!" });
