@@ -1,6 +1,7 @@
 import express from "express";
 //import cors from "cors";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import "dotenv/config";
 import db from "../src/database/models";
 import initAuthController from "../src/controllers/AuthController";
@@ -23,6 +24,7 @@ app.use(
     extended: true,
   })
 );
+app.use(cookieParser());
 
 //app.use(cors());
 
@@ -66,6 +68,7 @@ app.get("/api", (req, res) => {
 
 app.post("/auth/login", AuthController.login);
 app.get("/auth/logout", AuthController.logout);
+app.get("/auth/reauth", AuthController.reAuth);
 
 app.get("/user/:userId", EmployeeController.getEmployee);
 app.post("/add-employee", EmployeeController.addEmployee);

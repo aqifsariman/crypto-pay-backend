@@ -47,6 +47,34 @@ export default function initAuthController(db) {
     }
   };
 
+  const reAuth = async (req, res) => {
+    try {
+      let token = req.cookies["x-access-token"];
+      if (!token) {
+        return res.status(403).send({
+          message: "No token provided!",
+        });
+      }
+      jwt.verify(token, JWTSecretKey, (err, decoded) => {
+        if (err) {
+          return res.status(401).send({
+            message: "Unauthorized!",
+          });
+        }
+        req.userId = decoded.id;
+        return res.status(200).send({
+          message: "Authorized!",
+        });
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({
+        message:
+          "Could not perform operation at this time, kindly try again later.",
+      });
+    }
+  };
+
   const logout = async (req, res) => {
     try {
       res.clearCookie("x-access-token");
@@ -65,6 +93,7 @@ export default function initAuthController(db) {
 
   return {
     login,
+    reAuth,
     logout,
   };
 }
