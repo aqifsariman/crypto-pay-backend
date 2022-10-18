@@ -80,7 +80,7 @@ export default function initTimesheetController(db) {
   const updateTimesheet = async (req, res) => {
     let { timesheet_items } = req.body;
 
-    timesheet_items = JSON.parse(timesheet_items);
+    //timesheet_items = JSON.parse(timesheet_items);
 
     /*let timesheet_items = [
       {

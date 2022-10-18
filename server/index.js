@@ -24,13 +24,14 @@ app.use(
   })
 );
 
+app.use(cors());
+
+/*
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
-
-app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
   );
   next();
 });
+*/
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello there! Welcome to the server!" });
