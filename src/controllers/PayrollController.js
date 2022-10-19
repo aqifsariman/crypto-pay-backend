@@ -12,10 +12,13 @@ export default function initPayrollController(db) {
         include: [
           {
             model: db.User,
-            attributes: { exclude: ["password"] },
+            attributes: {
+              exclude: ["password", "id", "createdAt", "updatedAt"],
+            },
           },
           {
             model: db.Timesheet,
+            attributes: { exclude: ["id", "createdAt", "updatedAt"] },
           },
         ],
       });
