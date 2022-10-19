@@ -74,6 +74,7 @@ app.post("/auth/login", AuthController.login);
 app.get("/auth/logout", AuthController.logout);
 app.post("/auth/reauth", AuthController.reAuth);
 
+app.get("/employees", EmployeeController.listEmployees);
 app.get("/user/:userId", EmployeeController.getEmployee);
 app.post("/add-employee", EmployeeController.addEmployee);
 app.post("/update-employee/:userId", EmployeeController.postEmployee);

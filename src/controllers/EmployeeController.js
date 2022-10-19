@@ -110,9 +110,30 @@ export default function initEmployeeController(db) {
       });
 
       if (!deleted) {
-        res.status(204).json({ message: "Collection not found" });
+        res.status(204).json({ message: "User not found" });
       }
       res.status(202).json({ message: "Deleted!" });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({
+        message:
+          "Could not perform operation at this time, kindly try again later.",
+      });
+    }
+  };
+
+  const listEmployees = async (req, res) => {
+    try {
+      const allEmployees = await db.User.findAll({
+        attributes: { exclude: ["password"] },
+      });
+
+      if (!allEmployees) {
+        res
+          .status(204)
+          .json({ allEmployees: [], message: "No users not found" });
+      }
+      res.status(200).json({ allEmployees, message: "Users found" });
     } catch (e) {
       console.log(e);
       return res.status(500).send({
@@ -127,5 +148,6 @@ export default function initEmployeeController(db) {
     getEmployee,
     postEmployee,
     deleteEmployee,
+    listEmployees,
   };
 }
