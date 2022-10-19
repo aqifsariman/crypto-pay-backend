@@ -55,13 +55,14 @@ app.use((req, res, next) => {
 */
 
 app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
+    "PUT, HEAD, POST, GET, DELETE, PATCH, OPTIONS"
   );
   next();
 });
