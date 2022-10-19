@@ -4,7 +4,7 @@ import SparkMD5 from "spark-md5";
 export default function initEmployeeController(db) {
   const addEmployee = async (req, res) => {
     try {
-      let { name, email, designation, salary, walletAddress, isHR } = req.body;
+      let { name, email, designation, salary, walletAddress } = req.body;
       let avatarHASH = SparkMD5.hash(email);
       let avatar = `https://www.gravatar.com/avatar/${avatarHASH}?s=96&d=identicon&r=PG`;
 
@@ -27,7 +27,7 @@ export default function initEmployeeController(db) {
         designation,
         salary: Number(salary),
         walletAddress,
-        isHR: isHR,
+        isHR: false,
         isVerified: false,
         companyId: 1,
       });
@@ -71,7 +71,7 @@ export default function initEmployeeController(db) {
 
   const postEmployee = async (req, res) => {
     try {
-      let { name, email, designation, salary, walletAddress, isHR } = req.body;
+      let { name, email, designation, salary, walletAddress } = req.body;
       let { userId } = req.params;
 
       const user = await db.User.update(
@@ -81,7 +81,6 @@ export default function initEmployeeController(db) {
           designation,
           salary: Number(salary),
           walletAddress,
-          isHR: isHR,
         },
         { where: { id: userId } }
       );
