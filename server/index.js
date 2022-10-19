@@ -8,6 +8,7 @@ import initAuthController from "../src/controllers/AuthController";
 import initEmployeeController from "../src/controllers/EmployeeController";
 import initTimesheetController from "../src/controllers/TimesheetController";
 import initPayrollController from "../src/controllers/PayrollController";
+import cors from "cors"; //comment out for prod
 
 const AuthController = initAuthController(db);
 const EmployeeController = initEmployeeController(db);
@@ -15,7 +16,12 @@ const TimesheetController = initTimesheetController(db);
 const PayrollController = initPayrollController(db);
 
 const PORT = process.env.PORT || 3004;
+const env = process.env.NODE_ENV || "development";
 const app = express();
+
+if (env === "development") {
+  app.use(cors());
+}
 
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -25,8 +31,6 @@ app.use(
   })
 );
 app.use(cookieParser());
-
-//app.use(cors());
 
 /*
 const corsOptions = {
@@ -68,7 +72,7 @@ app.get("/api", (req, res) => {
 
 app.post("/auth/login", AuthController.login);
 app.get("/auth/logout", AuthController.logout);
-app.get("/auth/reauth", AuthController.reAuth);
+app.post("/auth/reauth", AuthController.reAuth);
 
 app.get("/user/:userId", EmployeeController.getEmployee);
 app.post("/add-employee", EmployeeController.addEmployee);

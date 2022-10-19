@@ -37,6 +37,7 @@ export default function initAuthController(db) {
       res.status(200).send({
         user,
         message: "Successfully logged in",
+        token,
       });
     } catch (e) {
       console.log(e);
@@ -49,8 +50,15 @@ export default function initAuthController(db) {
 
   const reAuth = async (req, res) => {
     try {
-      let token = req.cookies["x-access-token"];
-      let userId = req.cookies["userId"];
+      console.log(req.headers.authorization);
+      let { auth } = req.body;
+      console.log(auth);
+      let array = auth.split(" ");
+      let token = array[1];
+      let userId = array[2];
+
+      //let token = req.cookies["x-access-token"];
+      //let userId = req.cookies["userId"];
 
       const user = await db.User.findOne({
         where: {
@@ -77,7 +85,6 @@ export default function initAuthController(db) {
             message: "Unauthorized!",
           });
         }
-        req.userId = decoded.id;
 
         return res.status(200).send({
           user,
@@ -95,8 +102,8 @@ export default function initAuthController(db) {
 
   const logout = async (req, res) => {
     try {
-      res.clearCookie("x-access-token");
-      res.clearCookie("userId");
+      //res.clearCookie("x-access-token");
+      //res.clearCookie("userId");
       res.status(200).send({
         message: "Logged out!",
       });
