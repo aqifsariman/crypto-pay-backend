@@ -35,7 +35,8 @@ export default function initPayrollController(db) {
 
   const payOutstanding = async (req, res) => {
     let { timesheet_items } = req.body;
-    timesheet_items = JSON.parse(timesheet_items);
+    console.log(req.body.timesheet_items);
+    //timesheet_items = JSON.parse(timesheet_items);
     let transaction_logs = [];
     try {
       const replaceTokensPaid = async () => {
